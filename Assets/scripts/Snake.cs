@@ -19,20 +19,22 @@ public class Snake : MonoBehaviour
 
     void OnEnable() 
     {
-      GameManager.OnMoveSnake += Move;
+        EventBridge.OnMoveSnake += Move;
     }
 
     void OnDisable()
     {
-        GameManager.OnMoveSnake -= Move;
+        EventBridge.OnMoveSnake -= Move;
     }
 
 
-    public void Move(Vector3 direction)
+    public void Move(GameState gameState)
     {
+        if(SnakeNodes == null) return;
+
         foreach(var snakeNode in SnakeNodes)
         {
-            snakeNode.transform.position += direction;
+            snakeNode.transform.position += gameState.PlayerDirection;
         }
     }
 

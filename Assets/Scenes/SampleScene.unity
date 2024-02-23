@@ -353,7 +353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a7225f153adb48d78e8a2618be886b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Snake: {fileID: 7254212240021616992, guid: 700165057894442fbb198bd8d3265dd7, type: 3}
+  SnakePrefab: {fileID: 7254212240021616992, guid: 700165057894442fbb198bd8d3265dd7, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

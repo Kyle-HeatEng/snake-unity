@@ -1,28 +1,36 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
+
+public class GameState
+{
+    public Vector3 PlayerDirection;
+
+    public GameState(Vector3 playerDirection)
+    {
+        PlayerDirection = playerDirection;
+    }
+}
+
 
 public class GameManager : MonoBehaviour
 {
-    public static event Action<Vector3> OnMoveSnake;
     public GameObject SnakePrefab;
 
-    public int TickRate = 5;
+    public static int speed = 3;
 
-    private GameObject Snake;
+    private GameState gameState;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        Snake = Instantiate(SnakePrefab);
+        gameState = new(Vector3.forward * speed * Time.deltaTime);
+        Instantiate(SnakePrefab);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(Time.frameCount % TickRate == 0) return;
-        OnMoveSnake?.Invoke(new Vector3(1, 0, 0));
+        EventBridge.Update(gameState);
     }
 }
