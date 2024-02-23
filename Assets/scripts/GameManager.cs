@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameState
 {
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         gameState = new(Vector3.forward * speed * Time.deltaTime);
+        Controller.Movement += test;
         Instantiate(SnakePrefab);
     }
 
@@ -33,4 +35,10 @@ public class GameManager : MonoBehaviour
     {
         EventBridge.Update(gameState);
     }
+
+    void test(InputAction.CallbackContext movement)
+    {
+        Debug.Log(movement);        
+    }
+
 }
