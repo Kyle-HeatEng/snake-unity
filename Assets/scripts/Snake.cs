@@ -34,7 +34,7 @@ public class Snake : MonoBehaviour
 
         foreach(var snakeNode in SnakeNodes)
         {
-            snakeNode.transform.position += gameState.PlayerDirection;
+            snakeNode.transform.position += gameState.SnakeHeadDirection;
         }
     }
 
