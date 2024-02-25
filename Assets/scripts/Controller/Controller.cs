@@ -30,11 +30,20 @@ public class Controller : MonoBehaviour
         Movement -= OnMoveSnake;
     }
 
+    // <summary>
+    // This method is called when the player moves the snake
+    // Using Unity's Input System, we can read the value of the input and 
+    // pass it to the UpdateSnakeHeadPosition method in the EventBridge static class.
+    // - The Input is read as a Vector2 and then converted to a Vector3
+    // - The Input System Custom Input class is used to define how the input is read
+    // <param name="context"></param>
+    // </summary>
     private void OnMoveSnake(InputAction.CallbackContext context) 
     {
+        
         Vector2 MoveInput = context.ReadValue<Vector2>();
 
-        Vector3 UpdatedSnakeHeadDirection = new Vector3(-(int)MoveInput.x, 0, (int)MoveInput.y); //TODO this is hacky 
+        Vector3 UpdatedSnakeHeadDirection = new Vector3(MoveInput.x, 0, MoveInput.y); 
 
 
         EventBridge.UpdateSnakeHeadPosition(UpdatedSnakeHeadDirection);

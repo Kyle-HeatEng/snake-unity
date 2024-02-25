@@ -45,4 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SnakeNode: {fileID: 1666065170392301096, guid: 7dd73040da85d41af986fddc8f39ed85, type: 3}
-  SnakeLength: 1
+  SnakeLength: 5

@@ -17,14 +17,19 @@ public class GameManager : MonoBehaviour
 {
     public GameObject SnakePrefab;
 
-    public static float Speed = 0.1f;
-
     public static GameManager Instance;
 
-    public GameState GameState {get { return _GameState; }}
-    private GameState _GameState;
+    public GameState GameState {get { return _gameState; }}
+    private GameState _gameState;
 
-    GameManager()
+    private GameState _previousGameState;
+
+    // Define a field to keep track of the elapsed time
+    private float elapsedTime = 0f;
+    // Define your desired update interval in seconds (e.g., 60 seconds)
+    private float updateInterval = 0.3f;
+
+    private GameManager()
     {
        if(Instance == null)
        {
@@ -34,33 +39,44 @@ public class GameManager : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        _GameState = new(Vector3.forward * Speed * Time.deltaTime);
+        _gameState = new(Vector3.forward);
+        _previousGameState = _gameState;
         Instantiate(SnakePrefab);
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        EventBridge.Update(_GameState);
+        // Increment the elapsed time by the time since the last frame
+        elapsedTime += Time.fixedDeltaTime;
+
+        // Check if the elapsed time has exceeded the update interval
+        if (elapsedTime >= updateInterval)
+        {
+            // Reset the elapsed time
+            elapsedTime = 0f;
+
+            // Call your update method
+            EventBridge.Update(_previousGameState, _gameState);
+        }
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         EventBridge.OnUpdateSnakeHeadPosition += UpdateSnakeHeadPosition;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         EventBridge.OnUpdateSnakeHeadPosition -= UpdateSnakeHeadPosition;
     }
 
-    void UpdateSnakeHeadPosition(Vector3 SnakeHeadDirection)
+    private void UpdateSnakeHeadPosition(Vector3 SnakeHeadDirection)
     {
-        _GameState.SnakeHeadDirection = SnakeHeadDirection * Speed;
-        //Debug.Log(SnakeHeadDirection);
-       // Debug.Log(_GameState.SnakeHeadDirection);
+        _previousGameState = _gameState;
+        _gameState.SnakeHeadDirection = SnakeHeadDirection;
     }
 
 }
