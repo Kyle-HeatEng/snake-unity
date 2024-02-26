@@ -15,6 +15,20 @@ public class Snake : MonoBehaviour
         snakeNodes = snakeNodeGameObjects.ConvertAll(snakeNodeGameObject => snakeNodeGameObject.GetComponent<SnakeNode>());
     }
 
+    private List<GameObject> CreateSnakeNodes(int length)
+    {
+        var snakeNodes = new List<GameObject>();
+
+        for (int i = 0; i < length; i++)
+        {
+            var node = Instantiate(snakeNodeGameObject, new Vector3(i, 0, 0), Quaternion.identity);
+
+            snakeNodes.Add(node);
+        }
+
+        return snakeNodes;
+    }
+
     void OnEnable()
     {
         EventBridge.OnGameUpdate += Move;    
@@ -39,10 +53,7 @@ public class Snake : MonoBehaviour
             
             UpdateNodesPosition(snakeNode, parentNode, isHead, updatedState);
             
-            Vector3 prevSnakeNodeDirection = isHead ? updatedState.SnakeHeadDirection : parentNode.NodeDirection;
-
-            snakeNode.NodeDirection = prevSnakeNodeDirection;
-
+            UpdateSnakeNodeDirection(snakeNode, parentNode, isHead, updatedState);
         }
     }
 
@@ -62,18 +73,17 @@ public class Snake : MonoBehaviour
         snakeNode.transform.position = parentNode.transform.position;
     }
 
-    private List<GameObject> CreateSnakeNodes(int length)
+    private void UpdateSnakeNodeDirection(SnakeNode snakeNode, SnakeNode parentNode, bool isHead, GameState updatedState)
     {
-        var snakeNodes = new List<GameObject>();
-
-        for (int i = 0; i < length; i++)
+        if(isHead)
         {
-            var node = Instantiate(snakeNodeGameObject, new Vector3(i, 0, 0), Quaternion.identity);
-            
-            snakeNodes.Add(node);
+            snakeNode.NodeDirection = updatedState.SnakeHeadDirection;
+            return;
         }
 
-        return snakeNodes;
+        snakeNode.NodeDirection = parentNode.NodeDirection;
     }
+
+    
 
 }
