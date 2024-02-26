@@ -1,7 +1,5 @@
 # Unity Snake Game
 
-![fish](https://github.com/Kyle-HeatEng/snake-unity/assets/130041647/3cd60fcb-656b-44c1-8a21-81080f8223ce)
-
 A modern take on the classic Snake game, developed with Unity. This project aims to explore more in-depth aspects of Unity, utilize C# events for gameplay mechanics, and incorporate 3D modeling to bring a fresh perspective to the iconic game.
 
 ## Table of Contents
